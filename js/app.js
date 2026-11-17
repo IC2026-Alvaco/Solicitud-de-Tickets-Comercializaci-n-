@@ -100,6 +100,8 @@
     const pedida = location.hash.replace("#", "");
     let vista = ["nueva", "tablero", "dashboard"].includes(pedida) ? pedida : esIC(yo) ? "tablero" : "nueva";
     if (vista === "dashboard" && !esIC(yo)) vista = "tablero";
+    // IC atiende solicitudes, no las levanta: "Nueva solicitud" es solo para ejecutivos (y Liliana)
+    if (vista === "nueva" && esIC(yo)) vista = "tablero";
     if (pedida !== vista) history.replaceState(null, "", "#" + vista);
     mostrarApp(vista);
   }
@@ -499,7 +501,7 @@
     $("#yo-rol").textContent = rolTexto(yo.rol);
     $("#yo-cara").textContent = iniciales(yo.nombre);
 
-    const tabs = [["nueva", "Nueva solicitud"], ["tablero", esIC(yo) ? "Tablero" : "Mis solicitudes"]];
+    const tabs = esIC(yo) ? [["tablero", "Tablero"]] : [["nueva", "Nueva solicitud"], ["tablero", "Mis solicitudes"]];
     if (esIC(yo)) tabs.push(["dashboard", "Dashboard"]);
     $("#tabs").innerHTML = tabs
       .map(([id, txt]) => `<button type="button" role="tab" data-vista="${id}" aria-selected="${vista === id}">${txt}</button>`)
@@ -2672,7 +2674,6 @@
       ["todas", "Todas", cuenta.todas],
       ["mias", "Mías", cuenta.mias],
       ["sin", "Sin asignar", cuenta.sin],
-      ["pedi", "Las que pedí", tablero.tickets.filter((t) => yo && t.solicitante === yo.nombre).length],
       ...otros.map((m) => [`u:${m.id}`, `De ${m.nombre.split(" ")[0]}`, abiertos.filter((t) => t.asignadoId === m.id).length]),
       ["urgentes", "Urgentes", cuenta.urgentes],
       ["fuera", "Fuera de tiempo", cuenta.fuera],

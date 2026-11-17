@@ -1,0 +1,374 @@
+/* =====================================================================
+   TEMA "M365" · identidad corporativa azul y morado
+   Se activa con TEMA: "m365" en js/config.js (clase .tema-m365 en <html>).
+   Fuentes servidas desde el repo: Luckiest Guy (títulos) y Roboto Condensed (texto).
+   ===================================================================== */
+@font-face{font-family:"Luckiest Guy";src:url("../fuentes/luckiest-guy.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Roboto Condensed";src:url("../fuentes/roboto-condensed-400.woff2") format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Roboto Condensed";src:url("../fuentes/roboto-condensed-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Roboto Condensed";src:url("../fuentes/roboto-condensed-700.woff2") format("woff2");font-weight:500 900;font-display:swap}
+
+html.tema-m365{
+  --azul:#3F60A8;--azul-osc:#1F3864;
+  --lila:#7B61C4;--lila-osc:#4B2E83;
+  --tarjeta:#F2F5FB;--tarjeta-borde:#D5DEF0;
+  --lila-fondo:#F3EEFC;--lila-fondo2:#F8F5FE;--lila-borde:#D9CCF5;
+  --cuerpo:#333333;--leyenda:#595959;
+  --degradado:linear-gradient(90deg,#3F60A8,#7B61C4);
+  --sombra:0 1px 2px rgba(31,56,100,.06),0 4px 14px rgba(31,56,100,.08);
+  --titulo:"Luckiest Guy","Segoe UI Black",Impact,sans-serif;
+
+  /* la app toma estos colores para estatus y prioridades */
+  --marino:#3F60A8;--marino2:#3F60A8;--tinta:#1F3864;
+  --papel:#F2F5FB;--raya:#D5DEF0;--gris:#595959;
+  --cielo:#0F9ED5;--amarillo:#7B61C4;--naranja:#E97132;--verde:#1E7E34;--rojo:#C0392B;--rosa:#A02B93;--morado:#4B2E83;
+  --f:"Roboto Condensed","Arial Narrow","Segoe UI",sans-serif;
+  --p-baja:#2B6CD6;--p-media:#E3A008;--p-alta:#E8541E;--p-urgente:#C0392B;
+}
+.tema-m365 body{background:#fff;color:var(--cuerpo);font-size:15px}
+.tema-m365 #vista-app .cmp label,.tema-m365 .b-cuerpo .d,.tema-m365 .hora,.tema-m365 .mascota small,.tema-m365 .hito small{color:var(--leyenda)}
+.tema-m365 .banda h1 small,.tema-m365 .panel > header small{color:rgba(255,255,255,.82);opacity:1}
+
+/* ---------- títulos con Luckiest Guy ---------- */
+.tema-m365 .hoja-cima h2,.tema-m365 .det-cima h2,.tema-m365 .listo h2{
+  font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.02em;
+}
+.tema-m365 .banda h1 small{font-family:var(--f);text-transform:none;letter-spacing:0;font-size:12.5px}
+
+/* ---------- encabezado y pie: barras azules ---------- */
+.tema-m365 .banda{background:var(--azul);border-bottom:0;box-shadow:0 2px 10px rgba(31,56,100,.18)}
+.tema-m365 .banda h1{font-family:var(--f);font-weight:700;font-size:21px;letter-spacing:-.01em;line-height:1.1}
+.tema-m365 .franja{background:var(--degradado);height:5px}
+.tema-m365 .franja i{opacity:0}
+.tema-m365 .tabs{border:1.5px solid rgba(255,255,255,.5);border-radius:999px}
+.tema-m365 .tabs button{border-radius:999px;font-weight:700}
+.tema-m365 .tabs button + button{border-left:0}
+.tema-m365 .tabs button[aria-selected="true"]{color:var(--azul)}
+.tema-m365 .cara{border:2px solid #fff;background:var(--lila)}
+.tema-m365 .cinta-demo{background:var(--lila-fondo);border-bottom:1px solid var(--lila-borde);color:var(--lila-osc)}
+.tema-m365 .cinta-demo button{border:1px solid var(--lila);color:var(--lila-osc);border-radius:999px;background:#fff}
+.tema-m365 #vista-app{background:#fff}
+.tema-m365 #vista-app .pie{
+  max-width:none;background:var(--azul);color:#fff;padding:12px 26px;margin-top:10px;justify-content:space-between;
+}
+.tema-m365 #vista-app .pie img{opacity:1;background:#fff;border-radius:6px;padding:3px 6px;height:26px}
+
+/* ---------- tarjetas: relleno azul claro, borde fino y franja superior ---------- */
+.tema-m365 #vista-app .hoja,.tema-m365 #vista-app .vivo,.tema-m365 #vista-app .otto-nota,.tema-m365 #vista-app .maquina-caja,
+.tema-m365 #vista-app .panel,.tema-m365 #vista-app .detalle,.tema-m365 #vista-app .salud{
+  background:#fff;border:1px solid var(--tarjeta-borde);border-radius:12px;box-shadow:var(--sombra);
+}
+.tema-m365 #vista-app .otto-nota{background:var(--lila-fondo2);border-color:var(--lila-borde);border-top:5px solid var(--lila)}
+.tema-m365 #vista-app .maquina-caja{background:var(--tarjeta);border-top:5px solid var(--naranja)}
+.tema-m365 .otto-nota h4{color:var(--lila-osc)}
+
+/* encabezado de "Nueva solicitud": título azul y línea de 3 pt */
+.tema-m365 .hoja-cima{background:#fff;color:var(--azul);border-bottom:4px solid var(--azul);padding:20px 26px 14px}
+.tema-m365 #vista-app .hoja-cima{background:#fff}
+.tema-m365 #vista-app .hoja-cima::before{display:none}
+.tema-m365 .hoja-cima h2{font-size:30px;color:var(--azul)}
+.tema-m365 .hoja-cima p{color:var(--leyenda);opacity:1;font-size:14px}
+.tema-m365 .rot,.tema-m365 #vista-app .rot{color:var(--azul-osc);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+
+/* secciones: viñeta circular y línea fina */
+.tema-m365 .bloq > h3,.tema-m365 .sec h3{font-size:16px;font-weight:700;color:var(--azul-osc)}
+.tema-m365 .bloq > h3 .cua,.tema-m365 .sec h3 .cua{width:10px;height:10px;border-radius:50%;border:0;background:var(--azul)}
+.tema-m365 .bloq > h3::after,.tema-m365 .sec h3::after{background:var(--tarjeta-borde);height:1px}
+
+/* campos */
+.tema-m365 #vista-app .in{background:var(--tarjeta);border:1px solid var(--tarjeta-borde);border-radius:8px;color:var(--cuerpo)}
+.tema-m365 #vista-app .in:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(63,96,168,.18);background:#fff}
+.tema-m365 .busca input{background:var(--tarjeta);border:1px solid var(--tarjeta-borde);border-radius:999px}
+.tema-m365 #vista-app .error-campo{background:#FDECEA;border:1px solid #F5C6C2;color:#C0392B;border-radius:8px}
+
+/* ---------- contadores de estatus: tarjetas KPI con franja de color ---------- */
+.tema-m365 #vista-app .marcadores{background:none;border:0;box-shadow:none;padding:0;gap:12px;grid-template-columns:repeat(6,1fr)}
+.tema-m365 #vista-app .mk{
+  position:relative;display:grid;justify-items:start;gap:2px;padding:12px 14px 13px;text-align:left;
+  background:#fff;border:1px solid var(--tarjeta-borde);border-top:5px solid var(--c);border-radius:10px;
+  box-shadow:var(--sombra);color:var(--azul-osc);transition:transform .15s ease,box-shadow .15s ease,background .15s;
+}
+.tema-m365 #vista-app .mk:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(31,56,100,.14)}
+.tema-m365 #vista-app .mk .n,.tema-m365 #vista-app .mk[data-filtro="EN_PROCESO"] .n,
+.tema-m365 #vista-app .mk:active .n,.tema-m365 #vista-app .mk[aria-pressed="true"] .n{
+  width:auto;height:auto;display:block;background:none;border:0;box-shadow:none;transform:none;filter:none;
+  font-family:var(--titulo);font-weight:400;font-size:34px;line-height:1;color:var(--c);text-shadow:none;margin-top:2px;
+}
+.tema-m365 #vista-app .mk .e{font-family:var(--f);font-size:13.5px;font-weight:700;color:var(--leyenda);text-transform:none;letter-spacing:0;text-decoration:none;text-align:left}
+.tema-m365 #vista-app .mk[aria-pressed="true"]{background:color-mix(in srgb,var(--c) 9%,#fff);border-color:var(--c);box-shadow:0 0 0 1px var(--c),var(--sombra)}
+.tema-m365 #vista-app .mk[aria-pressed="true"] .e{color:var(--azul-osc)}
+
+/* marca de seleccionado, compartida por contadores y prioridad */
+.tema-m365 #vista-app .mk[aria-pressed="true"]::after,.tema-m365 #vista-app .urg button[aria-pressed="true"]::after{
+  content:"✓";position:absolute;top:9px;right:10px;width:20px;height:20px;border-radius:50%;
+  display:grid;place-items:center;background:var(--c);color:#fff;font-size:12px;font-weight:700;
+  animation:marca .3s cubic-bezier(.2,1.6,.4,1);
+}
+@keyframes marca{from{transform:scale(0)}}
+
+/* ---------- prioridad: cuatro tarjetas con semáforo ---------- */
+.tema-m365 #vista-app .urg{background:none;border:0;box-shadow:none;padding:0;gap:10px;grid-template-columns:repeat(4,1fr)}
+.tema-m365 #vista-app .urg button{
+  position:relative;display:flex;align-items:center;gap:14px;padding:12px 14px;text-align:left;min-height:72px;
+  background:#fff;border:1px solid var(--tarjeta-borde);border-top:5px solid var(--c);border-radius:10px;
+  color:var(--azul-osc);font-family:var(--f);font-size:17px;font-weight:700;text-transform:none;letter-spacing:0;text-decoration:none;
+  box-shadow:none;transition:transform .15s ease,box-shadow .15s ease,background .15s,border-color .15s;
+}
+.tema-m365 #vista-app .urg button::before{display:none}
+.tema-m365 #vista-app .urg button:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(31,56,100,.12)}
+.tema-m365 #vista-app .urg button[aria-pressed="true"]{
+  color:var(--azul-osc);text-decoration:none;
+  background:color-mix(in srgb,var(--c) 9%,#fff);border-color:var(--c);box-shadow:0 0 0 1px var(--c);
+}
+/* el semáforo: caja oscura con cuatro focos, solo enciende el de esa prioridad */
+.tema-m365 .urg .p-semaforo{
+  display:grid;gap:3px;padding:4px;flex:none;border-radius:7px;
+  background:#1F2937;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 1px 2px rgba(0,0,0,.2);
+}
+.tema-m365 .urg .p-semaforo i{
+  width:9px;height:9px;border-radius:50%;
+  background:color-mix(in srgb,var(--l) 28%,#1F2937);transition:background .2s,box-shadow .2s;
+}
+.tema-m365 .urg .p-semaforo i.on{background:var(--l);box-shadow:0 0 6px 1px var(--l)}
+.tema-m365 .urg .p-nombre{line-height:1.1}
+@media (prefers-reduced-motion:no-preference){
+  .tema-m365 #vista-app .urg button[aria-pressed="true"] .p-semaforo i.on{animation:enciende .9s ease-in-out 2}
+  @keyframes enciende{50%{box-shadow:0 0 12px 3px var(--l)}}
+}
+
+/* ---------- envío: franja lila con botón principal ---------- */
+.tema-m365 .repisa-envio{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 16px;
+  background:var(--lila-fondo2);border:1px solid var(--lila-borde);border-radius:12px;box-shadow:none;
+}
+.tema-m365 .repisa-envio .re-txt:first-child{display:none}
+.tema-m365 .re-txt{order:1;color:var(--lila-osc);font-family:var(--f);font-size:14.5px;font-weight:700;text-transform:none;letter-spacing:0;text-align:left}
+.tema-m365 .re-txt br{display:none}
+.tema-m365 #vista-app .repisa-envio .maq-boton{
+  order:2;width:auto;height:48px;padding:0 26px;border-radius:999px;border:0;
+  background:var(--lila);color:#fff;font-family:var(--f);font-weight:700;font-size:16px;letter-spacing:.01em;text-transform:none;
+  box-shadow:0 4px 14px rgba(123,97,196,.35);transform:none;
+}
+.tema-m365 #vista-app .repisa-envio .maq-boton::after{content:" →"}
+.tema-m365 #vista-app .repisa-envio .maq-boton:hover{background:#6A50B5;filter:none}
+.tema-m365 #vista-app .repisa-envio .maq-boton:active{transform:translateY(1px);box-shadow:0 2px 6px rgba(123,97,196,.35)}
+
+@media (max-width:1000px){.tema-m365 #vista-app .marcadores{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:560px){
+  .tema-m365 #vista-app .marcadores{grid-template-columns:repeat(2,1fr)}
+  .tema-m365 #vista-app .urg{grid-template-columns:repeat(2,1fr)}
+  .tema-m365 #vista-app .repisa-envio .maq-boton{width:100%}
+}
+
+/* tiempos: tarjeta con franja superior */
+.tema-m365 #vista-app .salud{background:var(--tarjeta);color:var(--cuerpo);border-top:5px solid var(--azul)}
+.tema-m365 #vista-app .salud b{color:var(--azul-osc)}
+.tema-m365 #vista-app .salud small{color:var(--leyenda)}
+.tema-m365 #vista-app .salud .barra i{border-radius:999px;box-shadow:none}
+
+/* lista */
+.tema-m365 #vista-app .panel > header{background:var(--azul);font-weight:700}
+.tema-m365 .panel-luz{background:#fff;box-shadow:none;border:0}
+.tema-m365 #vista-app .paginado{background:var(--tarjeta);border-top:1px solid var(--tarjeta-borde)}
+.tema-m365 #vista-app .paginado button{border:1px solid var(--tarjeta-borde);box-shadow:none;border-radius:999px;color:var(--azul)}
+.tema-m365 #vista-app .boleto{border:1px solid var(--tarjeta-borde);border-radius:10px;box-shadow:0 1px 3px rgba(31,56,100,.08)}
+.tema-m365 #vista-app .boleto:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(31,56,100,.14)}
+.tema-m365 #vista-app .boleto[aria-current="true"]{border-color:var(--c);box-shadow:0 0 0 2px var(--c),0 6px 16px rgba(31,56,100,.14);transform:none}
+.tema-m365 .talon{border-right:1px dashed rgba(255,255,255,.6)}
+.tema-m365 .talon span{color:#fff}
+.tema-m365 .b-cuerpo .t{color:var(--azul-osc);font-weight:700}
+.tema-m365 .prio{border-radius:999px;border-width:1px}
+.tema-m365 .ini{border:1px solid var(--tarjeta-borde);background:var(--tarjeta);color:var(--azul-osc);border-radius:50%}
+
+/* detalle: tarjeta blanca con franja de color del estatus */
+.tema-m365 .det-cima{background:#fff;border-top:6px solid var(--c);border-bottom:4px solid var(--azul)}
+.tema-m365 .det-cima h2{color:var(--azul);font-size:30px}
+.tema-m365 .det-cima p{color:var(--leyenda);opacity:1}
+.tema-m365 .mascota{background:var(--tarjeta);border:1px solid var(--tarjeta-borde);border-radius:12px}
+.tema-m365 .campos{border:1px solid var(--tarjeta-borde);border-radius:10px}
+.tema-m365 .ca{background:var(--tarjeta)}
+.tema-m365 .desc{background:var(--tarjeta);border:1px solid var(--tarjeta-borde);border-radius:10px;color:var(--cuerpo)}
+.tema-m365 .acc{border:1px solid var(--tarjeta-borde);box-shadow:none;border-radius:999px;color:var(--azul-osc)}
+.tema-m365 .acc.tomar{background:var(--lila);border-color:var(--lila);color:#fff}
+.tema-m365 .acc.tomar img{filter:brightness(0) invert(1)}
+.tema-m365 .mover button{border:1px solid var(--tarjeta-borde);box-shadow:none;border-radius:999px}
+.tema-m365 .mover button:hover{box-shadow:0 4px 10px rgba(31,56,100,.12)}
+.tema-m365 .volver{border:1px solid var(--tarjeta-borde);box-shadow:none;border-radius:999px;color:var(--azul)}
+
+/* resumen "así se va a registrar" */
+.tema-m365 .vivo-cima .n{font-family:var(--titulo);font-weight:400;text-transform:uppercase}
+
+/* pantalla de enviada */
+.tema-m365 .estampa{border-color:var(--verde);color:var(--verde);background:#E9F5EC}
+.tema-m365 .listo h2{color:var(--azul)}
+
+/* aviso flotante */
+.tema-m365 .flota{background:var(--azul-osc);border:0;border-radius:12px}
+
+/* ---------- login: se queda la peluchera roja de Muñelocos ---------- */
+.tema-m365 .login{
+  --marino:#0D1B3E;--marino2:#16295A;--tinta:#0D1B3E;--papel:#EBEFF7;--gris:#5C6788;--raya:#D6DEEC;
+  --rojo:#E5322D;--amarillo:#FFC62E;--cielo:#29ABE2;--verde:#2FA84F;--naranja:#F58220;--rosa:#EC008C;--morado:#7B3FB5;
+  --f:"Archivo","Segoe UI",system-ui,sans-serif;font-family:var(--f);color:var(--tinta);
+}
+
+/* garra en tono corporativo */
+.tema-m365 .garra-fija{filter:drop-shadow(0 4px 8px rgba(31,56,100,.25))}
+
+/* ---------- formulario: detalles del tema corporativo ---------- */
+.tema-m365 #vista-app .cmp select.in,.tema-m365 #vista-app .cmp select.in:focus{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233F60A8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:16px;padding-right:38px;cursor:pointer;
+}
+.tema-m365 #vista-app .cmp select.in:focus{background-color:#fff}
+.tema-m365 .con-ico .ico{color:#7C8DB5}
+.tema-m365 .con-ico:focus-within .ico{color:var(--azul)}
+.tema-m365 .hoja-ico{background:var(--lila-fondo);color:var(--lila);border:1px solid var(--lila-borde)}
+.tema-m365 .bloq > h3 .paso{background:var(--azul);font-family:var(--f)}
+.tema-m365 .bloq.hecho > h3 .paso{background:#1E7E34}
+.tema-m365 .cmp label{font-weight:700}
+.tema-m365 .guia i{background:var(--tarjeta);border-color:var(--tarjeta-borde);color:var(--azul-osc)}
+
+.tema-m365 .cats button{border:1px solid var(--tarjeta-borde);box-shadow:none;border-radius:10px;color:var(--azul-osc)}
+.tema-m365 .cats button:hover{box-shadow:0 8px 18px rgba(31,56,100,.12);border-color:#B9C7E6}
+.tema-m365 .cat-ico{background:#E8EEF9;color:var(--azul)}
+.tema-m365 .cat-txt b{font-weight:700;font-size:14.5px}
+.tema-m365 .cat-txt small{color:var(--leyenda);font-size:12.5px}
+.tema-m365 .cats button[aria-checked="true"]{background:#F2F5FB;border-color:var(--azul);box-shadow:0 0 0 1px var(--azul)}
+.tema-m365 .cats button[aria-checked="true"] .cat-ico{background:var(--azul);color:#fff}
+.tema-m365 .cats button[aria-checked="true"]::after{background:var(--azul)}
+.tema-m365 .chips button{border:1px solid var(--tarjeta-borde);color:var(--azul-osc);font-weight:700}
+.tema-m365 .chips button:hover{border-color:var(--azul)}
+.tema-m365 .chips button[aria-checked="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.tema-m365 .chips button[aria-checked="true"]::before{color:var(--azul)}
+
+.tema-m365 .msg-error{color:#C0392B}
+.tema-m365 #vista-app .con-error .in,.tema-m365 .con-error .cats button,.tema-m365 .con-error .chips button{border-color:#C0392B;box-shadow:0 0 0 1px #C0392B}
+.tema-m365 #re-estado.ok{color:#1E7E34}
+
+/* resumen: boleto blanco con franja del color de la prioridad */
+.tema-m365 .vivo-cima{background:#fff;color:var(--azul-osc);border-top:6px solid var(--c);border-bottom:1.5px dashed var(--tarjeta-borde)}
+.tema-m365 .vivo-cima .n{color:var(--azul);font-size:21px}
+.tema-m365 .vivo-cima .s{color:var(--leyenda);opacity:1;font-weight:700}
+.tema-m365 .vivo-cima::before,.tema-m365 .vivo-cima::after{background:#fff;border:1px solid var(--tarjeta-borde)}
+.tema-m365 .vivo-ico{background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c)}
+.tema-m365 .ren{border-bottom-color:var(--tarjeta-borde)}
+.tema-m365 .ren span{color:var(--leyenda)}
+.tema-m365 .ren b{color:var(--azul-osc);font-weight:700}
+.tema-m365 .vivo-compromiso{background:var(--lila-fondo2);border:1px solid var(--lila-borde)}
+.tema-m365 .vc-ico svg{color:var(--lila)}
+.tema-m365 .vivo-compromiso b{color:var(--lila-osc);font-weight:700;font-size:15px}
+.tema-m365 .vivo-compromiso small{color:var(--leyenda)}
+.tema-m365 .ayuda{border:1px solid var(--tarjeta-borde);border-top:5px solid var(--lila);border-radius:12px;box-shadow:var(--sombra)}
+.tema-m365 .ayuda-fila + .ayuda-fila{border-top:1px solid var(--tarjeta-borde)}
+.tema-m365 .ayuda-ico{background:#E8EEF9;color:var(--azul)}
+.tema-m365 .ayuda b{color:var(--azul-osc);font-weight:700;font-size:14.5px}
+.tema-m365 .ayuda p{color:var(--leyenda);font-size:13px}
+.tema-m365 .listo .acc.g{background:#1E7E34;border-color:#1E7E34;color:#fff;padding:10px 22px}
+/* semáforo de prioridad en el tema corporativo */
+.tema-m365 .sp-nombre{font-family:var(--f);color:#9AA6BF}
+.tema-m365 .sp-fila:hover .sp-nombre,.tema-m365 .sp-fila[aria-pressed="true"] .sp-nombre{color:var(--azul-osc)}
+.tema-m365 .sp-fila[aria-pressed="true"] .sp-nombre{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:22px}
+/* usuario y diálogo de salida en el tema corporativo */
+.tema-m365 .yo-chip .cara{background:var(--lila);border-color:#fff}
+.tema-m365 .yo-chip .cara::after{border-color:var(--azul)}
+.tema-m365 .dlg{border:1px solid var(--tarjeta-borde);box-shadow:0 30px 80px rgba(31,56,100,.35);border-top:6px solid var(--lila)}
+.tema-m365 .dlg-globo{background:var(--lila-fondo2);border:1px solid var(--lila-borde)}
+.tema-m365 .dlg-globo::before{border-right-color:var(--lila-fondo2)}
+.tema-m365 .dlg-globo b{font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.02em;color:var(--lila-osc)}
+.tema-m365 .dlg-globo p{color:var(--cuerpo);font-weight:400}
+.tema-m365 .dlg-btn{font-family:var(--f);font-weight:700}
+.tema-m365 .dlg-btn.sec{border:1px solid var(--tarjeta-borde);color:var(--azul-osc)}
+.tema-m365 .dlg-btn.sec:hover{border-color:var(--azul);background:var(--tarjeta)}
+@media (max-width:560px){.tema-m365 .dlg-globo::before{border-right-color:transparent;border-bottom-color:var(--lila-fondo2)}}
+/* avisos en el tema corporativo */
+.tema-m365 .campana-n{border-color:var(--azul)}
+.tema-m365 .avisos-panel{border:1px solid var(--tarjeta-borde);border-top:5px solid var(--lila)}
+.tema-m365 .avisos-panel::before{border-color:var(--tarjeta-borde);top:-10px;background:var(--lila);border:0}
+.tema-m365 .avisos-panel header b{font-family:var(--titulo);font-weight:400;text-transform:uppercase;color:var(--azul)}
+.tema-m365 .avisos-leer{color:var(--lila)}
+.tema-m365 .aviso{border-bottom-color:var(--tarjeta-borde)}
+.tema-m365 .aviso.nuevo{background:var(--lila-fondo2)}
+.tema-m365 .aviso.nuevo::after{background:var(--lila)}
+.tema-m365 .aviso-txt b{color:var(--azul-osc);font-weight:700}
+.tema-m365 .avisos-panel footer{background:var(--tarjeta);border-top-color:var(--tarjeta-borde)}
+.tema-m365 .avisos-nav{border-color:var(--lila);color:var(--lila)}
+.tema-m365 .acc.correo{background:#fff;color:var(--azul);border-color:var(--azul)}
+.tema-m365 .acc.correo:hover{background:var(--tarjeta)}
+.tema-m365 .nota-in{background:var(--lila-fondo2);border-color:var(--lila-borde)}
+.tema-m365 .nota-in:focus{border-color:var(--lila);box-shadow:0 0 0 3px rgba(123,97,196,.18)}
+.tema-m365 .hito-nota{background:var(--lila-fondo2);color:var(--lila-osc)}
+.tema-m365 .avance{background:var(--tarjeta);border-color:var(--tarjeta-borde)}
+.tema-m365 .av-paso.actual .av-punto{background:var(--azul);border-color:var(--azul);box-shadow:0 0 0 5px rgba(63,96,168,.18)}
+/* dashboard en el tema corporativo */
+.tema-m365 .db-titulo h2{font-family:var(--titulo);font-weight:400;text-transform:uppercase;color:var(--azul);font-size:28px;letter-spacing:.02em}
+.tema-m365 .db-periodo button{border-color:var(--tarjeta-borde);color:var(--azul-osc)}
+.tema-m365 .db-periodo button[aria-pressed="true"]{background:var(--azul);border-color:var(--azul);color:#fff}
+.tema-m365 .db-kpi{border-color:var(--tarjeta-borde);border-top-color:var(--c);box-shadow:var(--sombra)}
+.tema-m365 .db-kpi-n{font-family:var(--titulo);font-weight:400;font-size:32px}
+.tema-m365 .db-kpi span{color:var(--azul-osc);font-weight:700}
+.tema-m365 .db-panel{border-color:var(--tarjeta-borde);box-shadow:var(--sombra)}
+.tema-m365 .db-panel > header{background:var(--tarjeta);border-bottom-color:var(--tarjeta-borde)}
+.tema-m365 .db-panel h3{color:var(--azul-osc);font-weight:700}
+.tema-m365 .db-hico{background:#E8EEF9;color:var(--azul)}
+.tema-m365 .db-dona-n{font-family:var(--titulo);font-weight:400;fill:var(--azul-osc)}
+.tema-m365 .db-cara{background:var(--lila)}
+.tema-m365 .db-cara.chica{background:var(--azul)}
+.tema-m365 .db-barra,.tema-m365 .db-pila{background:#EEF2F9}
+.tema-m365 button.db-fila:hover{background:var(--tarjeta)}
+
+/* dashboard v2 en el tema corporativo */
+.tema-m365 .db-otto-globo{background:var(--lila-fondo2);border:1px solid var(--lila-borde)}
+.tema-m365 .db-otto-globo::before{border-right-color:var(--lila-fondo2)}
+.tema-m365 .db-otto-globo p{color:var(--cuerpo)}
+.tema-m365 .db-otto-globo p b{color:var(--lila-osc)}
+.tema-m365 .db-otto-nav span i.on{background:var(--lila)}
+.tema-m365 .db-otto-nav button{border-color:var(--lila-borde);color:var(--lila-osc)}
+.tema-m365 .db-cumple-datos div,.tema-m365 .db-salud > i{background:var(--tarjeta)}
+.tema-m365 .db-cumple-datos b{color:var(--azul-osc);font-family:var(--titulo);font-weight:400}
+.tema-m365 .db-g-n{font-family:var(--titulo);font-weight:400;color:var(--azul-osc)}
+.tema-m365 .db-aguja,.tema-m365 .db-eje{background:var(--azul-osc)}
+.tema-m365 .db-bloque b{font-family:var(--titulo);font-weight:400}
+.tema-m365 .db-tip{background:var(--azul-osc)}
+.tema-m365 .db-tip::after{border-top-color:var(--azul-osc)}
+.tema-m365 .db-col-barras i.nuevas,.tema-m365 .db-mini-ley i.n{background:var(--azul)}
+/* filtros del dashboard en el tema corporativo */
+.tema-m365 #db .db-fila.sel{background:var(--lila-fondo2);box-shadow:inset 3px 0 0 var(--lila)}
+.tema-m365 #db .db-col.sel{background:color-mix(in srgb,var(--lila) 14%,transparent)}
+.tema-m365 .db-filtros{background:var(--azul-osc)}
+.tema-m365 .db-ir{color:var(--azul-osc)}
+/* dashboard v4 en el tema corporativo */
+.tema-m365 .db-sup h2{font-family:var(--titulo);font-weight:400;text-transform:uppercase;color:var(--azul);font-size:26px;letter-spacing:.02em}
+.tema-m365 .db-otto-dlg .db-otto-globo{border-color:var(--lila);background:#fff}
+.tema-m365 .db-otto-dlg .db-otto-globo::before{border-color:var(--lila)}
+.tema-m365 .db-otto-eti{color:var(--lila)}
+.tema-m365 .db-otto-prog{background:var(--lila)}
+.tema-m365 .db-otto-dlg .db-otto-globo p{color:var(--azul-osc)}
+.tema-m365 .db-linea.nuevas{stroke:var(--azul)}
+.tema-m365 .db-pt{border-color:var(--azul)}
+.tema-m365 .db-pt.resueltas{border-color:var(--verde)}
+.tema-m365 #gNuevas stop{stop-color:var(--azul)}
+.tema-m365 .db-col:hover,.tema-m365 .db-col:focus-visible{background:linear-gradient(to top,rgba(63,96,168,.12),transparent 85%)}
+.tema-m365 .db-col-barra{background:linear-gradient(180deg,color-mix(in srgb,var(--azul) 65%,#fff),var(--azul));box-shadow:0 4px 10px rgba(63,96,168,.3)}
+.tema-m365 .db-col-pct{color:var(--azul)}
+.tema-m365 .db-kpi-pct em{font-family:var(--titulo);font-weight:400;font-size:22px}
+/* tablero en equipo · tema corporativo */
+.tema-m365 .chip-f{border-color:var(--tarjeta-borde);color:var(--azul-osc);font-weight:700}
+.tema-m365 .chip-f.sel{background:var(--azul);border-color:var(--azul)}
+.tema-m365 .busca-fila select,.tema-m365 .dr-btn{border-color:var(--tarjeta-borde);color:var(--azul-osc)}
+.tema-m365 .tab-lado .equipo{border-color:var(--tarjeta-borde);border-top:5px solid var(--lila);box-shadow:var(--sombra)}
+.tema-m365 .equipo > header b{color:var(--azul-osc);font-family:var(--titulo);font-weight:400;text-transform:uppercase;letter-spacing:.03em;font-size:15px}
+.tema-m365 .eq-persona,.tema-m365 .eq-sin{background:var(--tarjeta)}
+.tema-m365 .eq-persona.sel,.tema-m365 .eq-sin.sel{border-color:var(--lila)}
+.tema-m365 .eq-cara,.tema-m365 .dr-cara{background:var(--lila)}
+.tema-m365 .eq-n{font-family:var(--titulo);font-weight:400;color:var(--azul-osc)}
+.tema-m365 .det-resp{background:var(--tarjeta);border-bottom-color:var(--tarjeta-borde)}
+.tema-m365 .pop{border-color:var(--tarjeta-borde);border-top:4px solid var(--lila)}
+.tema-m365 .pop-si{background:var(--lila)}
+.tema-m365 .pop-op{background:var(--tarjeta)}
+.tema-m365 .b-quien .ini{background:var(--lila);color:#fff;border-color:var(--lila)}
+.tema-m365 .b-quien.sin .ini{background:#fff;color:var(--gris);border:1.5px dashed var(--tarjeta-borde)}
+.tema-m365 .boleto .t{color:var(--azul-osc)}
+.tema-m365 .dc{border-top-color:var(--lila)}
+.tema-m365 .dc-cab b{color:var(--azul-osc);font-weight:700}
+.tema-m365 .dc-pri{background:linear-gradient(90deg,var(--azul),var(--lila))}
+.tema-m365 .dc-cuerpo{background:var(--tarjeta)}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tickets Inteligencia Comercial</title>
+  <meta name="description" content="Solicitudes al área de Inteligencia Comercial de ALVACO">
+  <link rel="icon" href="marca/garra.png">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/tema-m365.css">
+</head>
+<body>
+
+  <!-- ===================== LOGIN ===================== -->
+  <div class="login" id="vista-login" hidden>
+    <div class="confeti" aria-hidden="true">
+      <i style="--c:var(--rojo);--x:8%;--y:14%;--t:7s;--r:18deg"></i>
+      <i style="--c:var(--amarillo);--x:22%;--y:78%;--t:9s;--r:-24deg" class="bola"></i>
+      <i style="--c:var(--cielo);--x:47%;--y:8%;--t:8s;--r:40deg"></i>
+      <i style="--c:var(--verde);--x:88%;--y:20%;--t:10s;--r:-12deg" class="bola"></i>
+      <i style="--c:var(--naranja);--x:93%;--y:70%;--t:7.5s;--r:30deg"></i>
+      <i style="--c:var(--rosa);--x:62%;--y:88%;--t:8.5s;--r:-36deg" class="bola"></i>
+      <i style="--c:var(--morado);--x:4%;--y:55%;--t:11s;--r:12deg"></i>
+    </div>
+
+    <div class="escena">
+      <!-- Vitrina tipo peluchera: la garra deja a Otto y él saluda -->
+      <div class="vitrina">
+        <div class="vidrio">
+        <div class="riel" aria-hidden="true"></div>
+
+        <div class="grua" id="grua" aria-hidden="true">
+          <svg viewBox="0 0 120 460" width="120" height="460">
+            <line x1="60" y1="0" x2="60" y2="360" stroke="#C9D3E6" stroke-width="4"/>
+            <rect x="34" y="352" width="52" height="26" rx="6" fill="#C9D3E6" stroke="#0D1B3E" stroke-width="3"/>
+            <circle cx="60" cy="365" r="5" fill="#E5322D"/>
+            <g class="pinza izq"><path d="M40 376 C 18 392, 14 420, 30 446" fill="none" stroke="#C9D3E6" stroke-width="7" stroke-linecap="round"/></g>
+            <g class="pinza der"><path d="M80 376 C 102 392, 106 420, 90 446" fill="none" stroke="#C9D3E6" stroke-width="7" stroke-linecap="round"/></g>
+          </svg>
+        </div>
+
+        <div class="otto" id="otto">
+          <div class="otto-sacude" id="otto-sacude">
+            <div class="otto-giro" id="otto-giro">
+              <div class="otto-respira">
+                <button type="button" class="otto-toque" id="otto-toque" aria-label="Saludar a Otto"></button>
+                <img class="otto-capa" src="marca/otto-cuerpo.png" alt="Otto, el oso de Muñelocos" draggable="false">
+                <img class="otto-capa otto-ojos" id="otto-ojos" src="marca/otto-ojos.png" alt="" draggable="false">
+                <img class="otto-capa otto-mano" id="otto-mano" src="marca/otto-mano.png" alt="" draggable="false">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="otto-sombra" id="otto-sombra" aria-hidden="true"></div>
+        <div class="piso" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <div class="globo" id="globo" role="status" aria-live="polite">
+          <span id="globo-txt"></span>
+          <span class="globo-flecha" aria-hidden="true">→</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta de acceso con forma de peluchera Muñelocos Classic -->
+      <div class="maq" id="login-caja">
+        <div class="maq-marquesina">
+          <img class="maq-logo" src="marca/munelocos-classic.png" alt="Muñelocos Classic">
+        </div>
+
+        <div class="maq-gabinete">
+          <div class="maq-letrero">
+            <img class="escudo" src="marca/alvaco.png" alt="ALVACO">
+            <h1>
+              Tickets Inteligencia Comercial
+              <small>Comercialización · ALVACO</small>
+            </h1>
+          </div>
+
+          <div class="maq-vidrio">
+            <div class="maq-riel" aria-hidden="true"></div>
+            <div class="maq-garrita" id="maq-garrita" aria-hidden="true">
+              <div class="garrita-cuerpo" id="garrita-cuerpo">
+                <svg viewBox="0 250 120 210" width="120" height="210">
+                  <line x1="60" y1="250" x2="60" y2="360" stroke="#0D1B3E" stroke-width="5"/>
+                  <rect x="34" y="352" width="52" height="26" rx="6" fill="#C9D3E6" stroke="#0D1B3E" stroke-width="4"/>
+                  <circle cx="60" cy="365" r="5" fill="#E5322D"/>
+                  <g class="pinza izq"><path d="M40 376 C 18 392, 14 420, 30 446" fill="none" stroke="#0D1B3E" stroke-width="12" stroke-linecap="round"/><path d="M40 376 C 18 392, 14 420, 30 446" fill="none" stroke="#C9D3E6" stroke-width="7" stroke-linecap="round"/></g>
+                  <g class="pinza der"><path d="M80 376 C 102 392, 106 420, 90 446" fill="none" stroke="#0D1B3E" stroke-width="12" stroke-linecap="round"/><path d="M80 376 C 102 392, 106 420, 90 446" fill="none" stroke="#C9D3E6" stroke-width="7" stroke-linecap="round"/></g>
+                </svg>
+              </div>
+            </div>
+
+            <div class="maq-form">
+              <div class="cmp">
+                <label for="correo">Correo</label>
+                <input class="in" id="correo" type="email" autocomplete="username" placeholder="nombre@alvaco.com.mx">
+              </div>
+              <div class="cmp">
+                <label for="password">Contraseña</label>
+                <input class="in" id="password" type="password" autocomplete="current-password">
+              </div>
+              <div class="error-campo" id="login-error" hidden></div>
+            </div>
+
+            <div class="maq-premios" aria-hidden="true">
+              <img src="marca/oso-saluda.png" alt="" style="--x:-3%;--r:-14deg;--h:200deg;--b:-6px">
+              <img src="marca/oso-obra.png" alt="" style="--x:11%;--r:8deg;--h:0deg;--b:2px">
+              <img src="marca/otto.png" alt="" class="grande" style="--x:25%;--r:-6deg;--h:0deg;--b:-10px">
+              <img src="marca/oso-saluda.png" alt="" style="--x:47%;--r:12deg;--h:110deg;--b:0px">
+              <img src="marca/oso-trofeo.png" alt="" style="--x:60%;--r:-10deg;--h:300deg;--b:-4px">
+              <img src="marca/oso-saluda.png" alt="" style="--x:76%;--r:16deg;--h:40deg;--b:2px">
+              <img src="marca/oso-obra.png" alt="" style="--x:88%;--r:-8deg;--h:160deg;--b:-8px">
+            </div>
+          </div>
+
+          <div class="maq-repisa">
+            <button type="button" class="maq-joystick" id="maq-joystick"
+              aria-label="Palanca: mantén presionado o usa las flechas para mover la garra">
+              <i class="base"></i>
+              <span class="mango"><i class="palo"></i><i class="bola"></i></span>
+            </button>
+            <button class="maq-boton" id="btn-entrar" type="button">Entrar</button>
+            <span class="maq-tip" aria-hidden="true">Mueve la<br>palanca</span>
+          </div>
+
+          <div class="maq-bajo" aria-hidden="true">
+            <span class="maq-bocina"></span>
+            <span class="maq-puerta">
+              <span class="maq-monedas"><i></i><i></i></span>
+              <span class="maq-vertical">Muñelocos</span>
+            </span>
+          </div>
+        </div>
+        <div class="maq-patas" aria-hidden="true"><i></i><i></i></div>
+
+        <div class="demo-caja" id="login-demo" hidden>
+          <b>Modo demo · entra con una cuenta de prueba</b>
+          <div class="demo-accesos" id="demo-accesos"></div>
+          <small>Contraseña de todas las cuentas: Comer26 · Los datos viven solo en este navegador.</small>
+        </div>
+        <p class="maq-sin-cuenta">¿Sin cuenta? Pídesela al equipo de Inteligencia Comercial.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== APP ===================== -->
+  <div id="vista-app" hidden>
+    <div class="confeti app-confeti" aria-hidden="true">
+      <i style="--c:var(--rojo);--x:3%;--y:22%;--t:7s;--r:18deg"></i>
+      <i style="--c:var(--amarillo);--x:96%;--y:34%;--t:9s;--r:-24deg" class="bola"></i>
+      <i style="--c:var(--cielo);--x:48%;--y:94%;--t:8s;--r:40deg"></i>
+      <i style="--c:var(--verde);--x:1.5%;--y:72%;--t:10s;--r:-12deg" class="bola"></i>
+      <i style="--c:var(--naranja);--x:98%;--y:82%;--t:7.5s;--r:30deg"></i>
+      <i style="--c:var(--rosa);--x:30%;--y:97%;--t:8.5s;--r:-36deg" class="bola"></i>
+      <i style="--c:var(--morado);--x:97.5%;--y:58%;--t:11s;--r:12deg"></i>
+    </div>
+    <header class="banda">
+      <div class="banda-arriba">
+        <img class="escudo" src="marca/alvaco.png" alt="ALVACO">
+        <div>
+          <h1>
+            Tickets Inteligencia Comercial
+            <small>Comercialización · ALVACO</small>
+          </h1>
+        </div>
+        <img class="mune" src="marca/munelocos.png" alt="Muñelocos">
+
+        <div class="tabs" id="tabs" role="tablist"></div>
+
+        <div class="yo">
+          <button class="campana actualizar" id="btn-actualizar" type="button" title="Actualizar datos" aria-label="Actualizar datos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.6-4.5L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.6 4.5L20 16"/><path d="M20 20v-4h-4"/></svg>
+          </button>
+          <div class="avisos" id="avisos">
+            <button class="campana" id="btn-campana" type="button" aria-label="Novedades" aria-expanded="false" aria-controls="avisos-panel">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>
+              <span class="campana-n" id="campana-n" hidden>0</span>
+            </button>
+            <div class="avisos-panel" id="avisos-panel" role="dialog" aria-label="Novedades" hidden>
+              <header>
+                <b>Novedades</b>
+                <button type="button" class="avisos-leer" id="avisos-leer">Marcar todo como leído</button>
+              </header>
+              <div class="avisos-lista" id="avisos-lista"></div>
+              <footer>
+                <button type="button" class="avisos-nav" id="avisos-nav"></button>
+              </footer>
+            </div>
+          </div>
+          <div class="yo-chip">
+            <div class="cara" id="yo-cara"></div>
+            <div class="yo-txt"><span id="yo-nombre"></span><small id="yo-rol"></small></div>
+          </div>
+          <button class="salir" id="btn-salir" type="button" aria-label="Salir de la aplicación">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h10"/></svg>
+            <span>Salir</span>
+          </button>
+        </div>
+      </div>
+      <div class="franja" aria-hidden="true">
+        <i style="background:var(--rojo)"></i>
+        <i style="background:var(--amarillo)"></i>
+        <i style="background:var(--cielo)"></i>
+        <i style="background:var(--verde)"></i>
+        <i style="background:var(--naranja)"></i>
+        <i style="background:var(--rosa)"></i>
+      </div>
+    </header>
+
+    <div class="cinta-demo" id="cinta-demo" hidden>
+      <span>Modo demo · los datos viven solo en este navegador y los correos se simulan</span>
+      <button type="button" id="btn-reiniciar">Reiniciar datos</button>
+    </div>
+
+    <main class="zona" id="contenido"></main>
+
+    <div class="pie">
+      <img src="marca/munelocos.png" alt="Muñelocos">
+      <span>Inteligencia Comercial · ALVACO</span>
+    </div>
+  </div>
+
+  <!-- confirmación de salida con Otto -->
+  <div class="dlg-fondo" id="dlg-salir" hidden>
+    <div class="dlg" role="alertdialog" aria-modal="true" aria-labelledby="dlg-titulo" aria-describedby="dlg-txt">
+      <div class="dlg-otto" aria-hidden="true">
+        <img src="marca/otto-cuerpo.png" alt="">
+        <img class="dlg-ojos" src="marca/otto-ojos.png" alt="">
+        <img class="dlg-mano" src="marca/otto-mano.png" alt="">
+      </div>
+      <div class="dlg-cuerpo">
+        <div class="dlg-globo">
+          <b id="dlg-titulo">¿Ya te vas?</b>
+          <p id="dlg-txt"></p>
+        </div>
+        <div class="dlg-acciones">
+          <button type="button" class="dlg-btn sec" id="dlg-quedar">Quedarme</button>
+          <button type="button" class="dlg-btn pri" id="dlg-confirmar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 16l-4-4 4-4"/><path d="M6 12h10"/></svg>
+            Sí, salir
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- aviso flotante -->
+  <div class="flota" id="flota" role="status">
+    <div class="q">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/>
+      </svg>
+    </div>
+    <div><b id="flota-t"></b><small id="flota-s"></small></div>
+  </div>
+
+  <!-- El orden importa: configuración, librería, fuentes de datos y al final la app -->
+  <script src="js/config.js"></script>
+  <script src="js/vendor/supabase.js"></script>
+  <!-- catálogo de cadenas y PDV solo para el modo demo (con Supabase vienen de la base) -->
+  <script>if (!window.IC_CONFIG || !window.IC_CONFIG.SUPABASE_URL) document.write('<script src="js/catalogo-pdv.js"><\/script>');</script>
+  <script src="js/datos-demo.js"></script>
+  <script src="js/datos-supabase.js"></script>
+  <script src="js/efectos.js"></script>
+  <script src="js/otto.js"></script>
+  <script src="js/marca-correo.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

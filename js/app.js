@@ -616,15 +616,14 @@
       desc: "Ej. Necesito el margen actual y cómo quedaría con renta variable al 15%. La junta es el jueves.",
     },
     "Margen comercial por producto": {
-      grupo: "Márgenes", alcance: true,
+      grupo: "Márgenes",
       ayuda: "Margen de uno o varios productos, en una sola plaza o en toda la cadena.",
-      campos: [{ k: "alcance", t: "¿Qué abarca?", tipo: "opciones", ops: ["Una plaza", "Toda la cadena"], req: true },
-               { k: "productos", t: "Producto(s)", tipo: "texto", req: true, ph: "Ej. Peluchera Muñelocos Classic, Destreza" }, CAMPO_PERIODO],
+      campos: [{ k: "productos", t: "Producto(s)", tipo: "texto", req: true, ph: "Ej. Peluchera Muñelocos Classic, Destreza" }, CAMPO_PERIODO],
       para: "Ej. Margen de pelucheras en Chedraui",
       desc: "Ej. Quiero comparar el margen de las pelucheras contra las de destreza para decidir qué equipos mover.",
     },
     "Margen comercial por punto de venta": {
-      grupo: "Márgenes",
+      grupo: "Márgenes", alcanceFijo: "Una plaza",
       ayuda: "Margen de la plaza que elegiste en Información general, para decidir si se mantiene, crece o se reubica.",
       pdv: true,
       campos: [CAMPO_PERIODO],
@@ -632,7 +631,7 @@
       desc: "Ej. Quiero saber si el punto deja margen suficiente para mantenerlo o si conviene reubicar los equipos.",
     },
     "Margen comercial por cadena": {
-      grupo: "Márgenes",
+      grupo: "Márgenes", alcanceFijo: "Toda la cadena",
       ayuda: "Margen de toda una cadena (la que elegiste en Información general).",
       campos: [CAMPO_PERIODO],
       para: "Ej. Margen de Bodega Aurrerá en la plaza",
@@ -901,7 +900,11 @@
     }, 120));
   }
   /** ¿La solicitud abarca toda la cadena? (entonces no se elige plaza) */
-  const esTodaCadena = (d, cat) => Boolean(cat && guiaDe(cat.nombre).alcance && (d.detalles || {}).alcance === "Toda la cadena");
+  const esTodaCadena = (d, cat) => {
+    const g = cat ? guiaDe(cat.nombre) : {};
+    if (g.alcanceFijo) return g.alcanceFijo === "Toda la cadena";
+    return d.alcance === "Toda la cadena";
+  };
   const sinAcentosTxt = (t) => String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const PDV_CACHE = {};
 
@@ -932,7 +935,7 @@
     }
     if (!form) {
       form = {
-        plazaId: "", cadenaId: "", pdvId: "", pdv: "", categoriaId: "",
+        plazaId: "", cadenaId: "", pdvId: "", pdv: "", alcance: "Una plaza", categoriaId: "",
         folioContrato: "", margenPara: "", prioridad: "MEDIA",
         proposito: "", descripcion: "", detalles: {},
         quePaso: "", queNecesitas: "", paraCuando: "", motivoFecha: "", renta: rentaVacia(),
@@ -1440,7 +1443,7 @@
       $("#btn-otra").addEventListener("click", () => {
         // empieza de cero: todos los campos vuelven a como al entrar
         Object.assign(d, {
-          enviado: null, plazaId: "", cadenaId: "", pdvId: "", pdv: "", categoriaId: "",
+          enviado: null, plazaId: "", cadenaId: "", pdvId: "", pdv: "", alcance: "Una plaza", categoriaId: "",
           folioContrato: "", margenPara: "", prioridad: "MEDIA", prioridadTocada: false,
           proposito: "", descripcion: "", detalles: {},
           quePaso: "", queNecesitas: "", paraCuando: "", motivoFecha: "", renta: rentaVacia(),
@@ -1477,7 +1480,10 @@
                     <ul class="combo-lista" id="l-cadena" role="listbox" hidden></ul></div>
                 </div>
                 <div class="cmp" data-cmp="pdvId">
-                  <label for="f-pdv">Plaza</label>
+                  <div class="pl-cab"><label for="f-pdv">Plaza</label>
+                    <span class="pl-alc" id="f-alcance" role="radiogroup" aria-label="¿Una plaza o toda la cadena?">
+                      ${["Una plaza", "Toda la cadena"].map((a) => `<button type="button" role="radio" data-alcance="${a}" aria-checked="${(d.alcance || "Una plaza") === a}">${a}</button>`).join("")}
+                    </span></div>
                   <div class="con-ico combo"><span class="ico">${ICONO.pin}</span>
                     <input class="in" id="f-pdv" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="l-pdv" autocomplete="off"
                       value="${esc(d.pdv || "")}" placeholder="Primero elige la cadena" ${d.cadenaId ? "" : "disabled"}>
@@ -1715,7 +1721,15 @@
     // cadena → puntos de venta de esa cadena
     const inPdv = $("#f-pdv");
     async function cargarPdv() {
-      if (esTodaCadena(d, categorias.find((c) => c.id === d.categoriaId))) {
+      const catA = categorias.find((c) => c.id === d.categoriaId);
+      const fijo = catA && guiaDe(catA.nombre).alcanceFijo;
+      const todaA = esTodaCadena(d, catA);
+      $$("#f-alcance button").forEach((b) => {
+        b.setAttribute("aria-checked", String(b.dataset.alcance === (todaA ? "Toda la cadena" : "Una plaza")));
+        b.disabled = Boolean(fijo);
+        b.title = fijo ? `“${catA.nombre}” siempre es ${fijo === "Toda la cadena" ? "de toda la cadena" : "de una plaza"}` : "";
+      });
+      if (todaA) {
         d.pdvId = ""; d.pdv = ""; inPdv.value = ""; inPdv.disabled = true;
         inPdv.placeholder = "Toda la cadena (todas sus plazas)";
         limpiarError("pdvId");
@@ -1728,6 +1742,12 @@
       inPdv.disabled = n === 0;
       inPdv.placeholder = n ? `Busca entre ${n.toLocaleString("es-MX")} plazas de la cadena` : "Esta cadena no tiene plazas registradas";
     }
+    $("#f-alcance").addEventListener("click", (e) => {
+      const b = e.target.closest("button[data-alcance]");
+      if (!b || b.disabled) return;
+      d.alcance = b.dataset.alcance;
+      cargarPdv(); pintarVivo();
+    });
     montarCombo({
       input: $("#f-cadena"), lista: $("#l-cadena"), opciones: () => cadenas, elegido: () => d.cadenaId,
       alElegir: (o) => {
@@ -1760,7 +1780,6 @@
       d.detalles = { ...(d.detalles || {}), [k]: v };
       $$(`#cat-extra button[data-det="${k}"]`).forEach((x) => x.setAttribute("aria-checked", String(x.dataset.opc === v)));
       limpiarError(`det-${k}`);
-      if (k === "alcance") cargarPdv();
       pintarVivo();
     });
     /** Repinta solo el cálculo (sin perder el campo donde se está escribiendo). */
@@ -1928,6 +1947,7 @@
         folioContrato: "",
         margenPara: llevaMargen(cat && cat.nombre) ? d.margenPara : "No aplica",
         detalles: {
+          alcance: esTodaCadena(d, cat) ? "Toda la cadena" : "Una plaza",
           ...Object.fromEntries((guiaDe(cat && cat.nombre).campos || [])
             .map((c) => [c.k, String((d.detalles || {})[c.k] || "").trim()]).filter(([, v]) => v)),
           ...(renta ? { renta } : {}),

@@ -3603,3 +3603,11 @@ html:not(.tema-m365) .tk-ico{color:#FFD84A}
 .d2-dona b{font-size:28px}
 /* barra superior, franja demo y avisos proporcionales a la pantalla */
 .banda,.cinta-demo,#flota,.db-filtros,.ayuda-otto,#otto-ayuda{zoom:var(--zoom-ui,1)}
+/* Plaza: ¿una plaza o toda la cadena? */
+.pl-cab{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:4px}
+.pl-cab label{margin:0}
+.pl-alc{display:inline-flex;background:#F1F4FA;border:1px solid var(--raya);border-radius:999px;padding:2px}
+.pl-alc button{border:0;background:none;font:inherit;font-size:11.5px;font-weight:800;color:var(--gris);padding:3px 10px;border-radius:999px;cursor:pointer}
+.pl-alc button[aria-checked="true"]{background:#3F60A8;color:#fff;box-shadow:0 1px 2px rgba(31,42,68,.18)}
+.pl-alc button:disabled{cursor:not-allowed;opacity:.7}
+.pl-alc button:disabled[aria-checked="false"]{opacity:.35}

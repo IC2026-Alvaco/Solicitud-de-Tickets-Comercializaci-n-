@@ -100,8 +100,6 @@
     const pedida = location.hash.replace("#", "");
     let vista = ["nueva", "tablero", "dashboard"].includes(pedida) ? pedida : esIC(yo) ? "tablero" : "nueva";
     if (vista === "dashboard" && !esIC(yo)) vista = "tablero";
-    // IC atiende solicitudes, no las levanta: "Nueva solicitud" es solo para ejecutivos (y Liliana)
-    if (vista === "nueva" && esIC(yo)) vista = "tablero";
     if (pedida !== vista) history.replaceState(null, "", "#" + vista);
     mostrarApp(vista);
   }
@@ -501,7 +499,7 @@
     $("#yo-rol").textContent = rolTexto(yo.rol);
     $("#yo-cara").textContent = iniciales(yo.nombre);
 
-    const tabs = esIC(yo) ? [["tablero", "Tablero"]] : [["nueva", "Nueva solicitud"], ["tablero", "Mis solicitudes"]];
+    const tabs = [["nueva", "Nueva solicitud"], ["tablero", esIC(yo) ? "Tablero" : "Mis solicitudes"]];
     if (esIC(yo)) tabs.push(["dashboard", "Dashboard"]);
     $("#tabs").innerHTML = tabs
       .map(([id, txt]) => `<button type="button" role="tab" data-vista="${id}" aria-selected="${vista === id}">${txt}</button>`)
@@ -565,6 +563,7 @@
   function iconoCategoria(nombre) {
     const n = String(nombre).toLowerCase();
     if (n.includes("punto de venta")) return ICONO.pin;
+    if (n.includes("margen") && n.includes("producto")) return icoL('<path d="M21 8l-9-5-9 5 9 5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/>');
     if (n.includes("margen") && n.includes("cadena")) return ICONO.tienda;
     if (n.includes("margen")) return ICONO.porcentaje;
     if (n.includes("contratos nuevos") || n.includes("contrato nuevo")) return ICONO_TIPO.contratoNuevo;
@@ -615,6 +614,14 @@
       campos: [],
       para: "Ej. Margen para renegociar con Tiendas Neto",
       desc: "Ej. Necesito el margen actual y cómo quedaría con renta variable al 15%. La junta es el jueves.",
+    },
+    "Margen comercial por producto": {
+      grupo: "Márgenes", alcance: true,
+      ayuda: "Margen de uno o varios productos, en una sola plaza o en toda la cadena.",
+      campos: [{ k: "alcance", t: "¿Qué abarca?", tipo: "opciones", ops: ["Una plaza", "Toda la cadena"], req: true },
+               { k: "productos", t: "Producto(s)", tipo: "texto", req: true, ph: "Ej. Peluchera Muñelocos Classic, Destreza" }, CAMPO_PERIODO],
+      para: "Ej. Margen de pelucheras en Chedraui",
+      desc: "Ej. Quiero comparar el margen de las pelucheras contra las de destreza para decidir qué equipos mover.",
     },
     "Margen comercial por punto de venta": {
       grupo: "Márgenes",
@@ -893,6 +900,8 @@
       if (exacta && exacta.id !== elegido()) elegir(exacta); else input.value = nombreDe();
     }, 120));
   }
+  /** ¿La solicitud abarca toda la cadena? (entonces no se elige plaza) */
+  const esTodaCadena = (d, cat) => Boolean(cat && guiaDe(cat.nombre).alcance && (d.detalles || {}).alcance === "Toda la cadena");
   const sinAcentosTxt = (t) => String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const PDV_CACHE = {};
 
@@ -900,7 +909,7 @@
   function validarCampos(d, categorias) {
     const cat = categorias.find((c) => c.id === d.categoriaId);
     if (!d.cadenaId) return { campo: "cadenaId", msg: "Elige la cadena" };
-    if (!d.pdvId) return { campo: "pdvId", msg: "Elige la plaza de la cadena" };
+    if (!d.pdvId && !esTodaCadena(d, cat)) return { campo: "pdvId", msg: "Elige la plaza de la cadena" };
     if (!d.prioridad) return { campo: "prioridad", msg: "Elige la prioridad en el semáforo" };
     if (!cat) return { campo: "categoriaId", msg: "Elige el tipo de solicitud" };
     if (llevaMargen(cat.nombre) && !d.margenPara) return { campo: "margenPara", msg: "Elige el esquema de renta" };
@@ -1188,7 +1197,7 @@
     const d = form;
     const cat = catalogos && catalogos.categorias.find((c) => c.id === d.categoriaId);
     const faltan = [];
-    if (!d.pdvId) faltan.push("plaza");
+    if (!d.pdvId && !esTodaCadena(d, cat)) faltan.push("plaza");
     if (!d.cadenaId) faltan.push("cadena");
     if (!cat) faltan.push("tipo");
     else if (llevaMargen(cat.nombre) && !d.margenPara) faltan.push("tipo");
@@ -1651,6 +1660,7 @@
       d.detalles = {};
       d.renta = rentaVacia();
       pintarExtra();
+      cargarPdv();
       $$("#f-cat button").forEach((x) => x.setAttribute("aria-checked", String(x.dataset.cat === d.categoriaId)));
       const cat = categorias.find((c) => c.id === d.categoriaId);
       const caja = $(".margen-cmp", cuerpo);
@@ -1705,6 +1715,12 @@
     // cadena → puntos de venta de esa cadena
     const inPdv = $("#f-pdv");
     async function cargarPdv() {
+      if (esTodaCadena(d, categorias.find((c) => c.id === d.categoriaId))) {
+        d.pdvId = ""; d.pdv = ""; inPdv.value = ""; inPdv.disabled = true;
+        inPdv.placeholder = "Toda la cadena (todas sus plazas)";
+        limpiarError("pdvId");
+        return;
+      }
       if (!d.cadenaId) { inPdv.disabled = true; inPdv.placeholder = "Primero elige la cadena"; return; }
       inPdv.disabled = true; inPdv.placeholder = "Cargando plazas…";
       if (!PDV_CACHE[d.cadenaId]) PDV_CACHE[d.cadenaId] = await D.puntosVenta(d.cadenaId);
@@ -1744,6 +1760,7 @@
       d.detalles = { ...(d.detalles || {}), [k]: v };
       $$(`#cat-extra button[data-det="${k}"]`).forEach((x) => x.setAttribute("aria-checked", String(x.dataset.opc === v)));
       limpiarError(`det-${k}`);
+      if (k === "alcance") cargarPdv();
       pintarVivo();
     });
     /** Repinta solo el cálculo (sin perder el campo donde se está escribiendo). */
@@ -1809,14 +1826,14 @@
     $("#vivo-ico").innerHTML = cat ? iconoCategoria(cat.nombre) : ICONO.ticket;
     poner("#vivo-folio", d.enviado || "Folio al enviar");
     poner("#vivo-cat", cat ? cat.nombre : "Elige el tipo de solicitud");
-    poner("#vivo-plaza", d.pdv || "—");
+    poner("#vivo-plaza", d.pdv || (esTodaCadena(d, cat) ? "Toda la cadena" : "—"));
     poner("#vivo-cadena", nombreDe(cadenas, d.cadenaId));
     poner("#vivo-prio", PRIORIDAD_TEXTO[d.prioridad] || "—");
     // fecha fija: el momento en que se levanta la solicitud (se refresca cada minuto mientras se llena)
     poner("#vivo-fecha", fechaSolicitudTxt(true));
     const fc = $("#f-compromiso");
     if (fc) fc.innerHTML = `${ICONO_CAL}<span><b>${esc(fechaSolicitudTxt())}</b></span>`;
-    [["cadenaId", d.cadenaId], ["pdvId", d.pdvId],
+    [["cadenaId", d.cadenaId], ["pdvId", d.pdvId || (esTodaCadena(d, cat) ? "toda" : "")],
       ["quePaso", (d.quePaso || "").trim().length >= 10 ? "si" : ""], ["queNecesitas", (d.queNecesitas || "").trim().length >= 10 ? "si" : ""]]
       .forEach(([c, v]) => { const caja = $(`[data-cmp="${c}"]`); if (caja) caja.classList.toggle("lleno", Boolean(v)); });
     const prioEl = $("#vivo-prio"); if (prioEl) { prioEl.style.setProperty("--c", PRIORIDAD_COLOR[d.prioridad] || "transparent"); prioEl.classList.toggle("vacio", !d.prioridad); }
@@ -1832,7 +1849,7 @@
     const cuerpo = $("#hoja-cuerpo");
     if (!cuerpo || d.enviado) return;
     const pasos = [
-      Boolean(d.cadenaId && d.pdvId),
+      Boolean(d.cadenaId && (d.pdvId || esTodaCadena(d, cat))),
       Boolean(d.prioridad && d.prioridadTocada),
       Boolean(cat && (!llevaMargen(cat.nombre) || d.margenPara)
         && (guiaDe(cat.nombre).campos || []).every((c) => !c.req || String((d.detalles || {})[c.k] || "").trim())
@@ -2674,6 +2691,7 @@
       ["todas", "Todas", cuenta.todas],
       ["mias", "Mías", cuenta.mias],
       ["sin", "Sin asignar", cuenta.sin],
+      ["pedi", "Las que pedí", tablero.tickets.filter((t) => yo && t.solicitante === yo.nombre).length],
       ...otros.map((m) => [`u:${m.id}`, `De ${m.nombre.split(" ")[0]}`, abiertos.filter((t) => t.asignadoId === m.id).length]),
       ["urgentes", "Urgentes", cuenta.urgentes],
       ["fuera", "Fuera de tiempo", cuenta.fuera],

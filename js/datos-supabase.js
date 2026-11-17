@@ -120,7 +120,7 @@
       if (error) falla(error, "No se pudieron cargar los tickets");
       return data.map((t) => ({
         id: String(t.id), folio: t.folio,
-        plaza: t.punto_venta ? t.punto_venta.nombre : t.plaza ? t.plaza.nombre : "—",
+        plaza: t.punto_venta ? t.punto_venta.nombre : (t.detalles || {}).alcance === "Toda la cadena" ? "Toda la cadena" : t.plaza ? t.plaza.nombre : "—",
         cadena: t.cadena ? t.cadena.nombre : "—",
         pdv: t.punto_venta ? t.punto_venta.nombre : null,
         categoria: t.categoria ? t.categoria.nombre : "—",
@@ -193,8 +193,9 @@
       if (m.error) { console.error("[supabase] mensajes", m.error); return []; }
       const lecturas = (l.data || []);
       return m.data.map((x) => ({
-        id: String(x.id), ticketId: String(x.ticket_id), autorId: x.autor_id, autor: x.autor ? x.autor.nombre : "—",
-        esIC: x.autor ? ["ANALISTA", "ADMIN"].includes(x.autor.rol) : false, texto: x.texto, creadoEn: x.creado_en,
+        id: String(x.id), ticketId: String(x.ticket_id), autorId: x.autor_id,
+        autor: x.autor ? x.autor.nombre : (x.autor_id === uid ? "Tú" : "Inteligencia Comercial"),
+        esIC: x.autor ? ["ANALISTA", "ADMIN"].includes(x.autor.rol) : x.autor_id !== uid, texto: x.texto, creadoEn: x.creado_en,
         mio: x.autor_id === uid,
         visto: lecturas.some((r) => r.perfil_id !== x.autor_id && new Date(r.leido_hasta) >= new Date(x.creado_en)),
       }));

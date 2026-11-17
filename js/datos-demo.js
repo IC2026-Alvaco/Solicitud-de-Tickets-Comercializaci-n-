@@ -4,7 +4,7 @@
  * de este navegador. Sirve para ver la app funcionando sin base de datos.
  */
 (function () {
-  const LLAVE = "tickets-ic-demo-v9";
+  const LLAVE = "tickets-ic-demo-v10";
   const ESTATUS_TEXTO = { NUEVO: "Nuevo", EN_PROCESO: "En proceso", EN_ESPERA: "En espera", ENTREGADO: "Entregado", COMPLETADO: "Completado", CANCELADO: "Cancelado" };
   const LLAVE_SESION = "tickets-ic-demo-sesion";
   const CLAVE_DEMO = "Comer26";
@@ -28,6 +28,7 @@
   const CATEGORIAS = [
     ["Contratos nuevos", 48], ["Renovaciones de contratos", 48], ["Cambio de renta", 48],
     ["Solicitud de margen", 24], ["Margen comercial por punto de venta", 24], ["Margen comercial por cadena", 48],
+    ["Margen comercial por producto", 48],
     ["Análisis de ingreso", 48], ["Análisis por proyecto", 72], ["Análisis de locales", 72],
     ["Estatus actual de instalaciones", 24], ["Reporte nuevo", 72],
   ];
@@ -320,7 +321,7 @@
         .sort((a, z) => z.creadoEn.localeCompare(a.creadoEn))
         .map((t) => ({
           id: t.id, folio: t.folio,
-          plaza: t.pdv || nom(b.plazas, t.plazaId), cadena: nom(b.cadenas, t.cadenaId), categoria: nom(b.categorias, t.categoriaId),
+          plaza: t.pdv || ((t.detalles || {}).alcance === "Toda la cadena" ? "Toda la cadena" : nom(b.plazas, t.plazaId)), cadena: nom(b.cadenas, t.cadenaId), categoria: nom(b.categorias, t.categoriaId),
           pdv: t.pdv || null,
           folioContrato: t.folioContrato, margenPara: t.margenPara, detalles: t.detalles || {},
           prioridad: t.prioridad, estatus: t.estatus, proposito: t.proposito, descripcion: t.descripcion,

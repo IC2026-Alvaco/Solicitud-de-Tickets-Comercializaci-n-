@@ -7,15 +7,15 @@
  * Para conectarla a la base real, pega aquí los dos valores de
  * Supabase → Project Settings → API:
  *   - Project URL         → SUPABASE_URL
- *   - anon / public key   → SUPABASE_ANON_KEY
+ *   - Publishable key     → SUPABASE_ANON_KEY  (sb_publishable_…)
  *
- * La llave "anon" es pública por diseño y puede vivir en el repo.
- * Lo que protege los datos son las políticas RLS de supabase/01_estructura.sql.
- * NUNCA pongas aquí la llave "service_role".
+ * La llave "publishable" es pública por diseño y puede vivir en el repo.
+ * Lo que protege los datos son las reglas de seguridad (RLS) de la base.
+ * NUNCA pongas aquí la llave "secret" (sb_secret_…) ni la "service_role".
  */
 window.IC_CONFIG = {
-  SUPABASE_URL: "",
-  SUPABASE_ANON_KEY: "",
+  SUPABASE_URL: "https://jvggleyxmnccxpjwnlzh.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_PvsrAN7U6XBeZvd9298GDw_sDwTBVzp",
 
   // Apariencia:
   //   "m365"      → app en azul y morado corporativo, login con la peluchera roja de Muñelocos
